@@ -27,4 +27,72 @@
         <h2 style="color: var(--primary); margin-bottom: 30px;">HOT COUPLE</h2>
         <p style="font-size: 14px; color: #aaa; margin-bottom: 20px;">Vui lòng đăng nhập để bắt đầu thử thách</p>
         <button class="btn-google" id="loginBtn">
-            <img src="
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+            Đăng nhập với Google
+        </button>
+    </div>
+
+    <div id="game-section" class="container">
+        <img id="user-photo" class="user-avatar" src="" alt="Avatar">
+        <p id="user-name" style="margin: 5px 0; font-weight: bold;"></p>
+        <h1 style="color: var(--primary);">🔥 THỬ THÁCH 🔥</h1>
+        <div id="challenge-box" style="background: white; color: black; padding: 25_px; border-radius: 15px; font-weight: bold; margin: 20px 0; min-height: 50px; display: flex; align-items: center; justify-content: center;">
+            Sẵn sàng chưa?
+        </div>
+        <button class="btn-main" id="spinBtn">XOAY NGAY 🎲</button>
+        <button id="logoutBtn" style="background:none; border:none; color: #555; margin-top: 25px; cursor:pointer; text-decoration: underline;">Đăng xuất</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDlswEZUfys_PJ7337YOz4t_MaHwjnuNDY",
+            authDomain: "hot-couple-game-21db1.firebaseapp.com",
+            projectId: "hot-couple-game-21db1",
+            storageBucket: "hot-couple-game-21db1.firebasestorage.app",
+            messagingSenderId: "1074792311940",
+            appId: "1:1074792311940:web:21118ed565a30ca33126d1",
+            measurementId: "G-BFMM51ZKND"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const showSection = (id) => {
+            document.querySelectorAll('.container').forEach(c => c.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        };
+
+        // Kiểm tra đăng nhập
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // THAY EMAIL CỦA BẠN VÀO ĐÂY ĐỂ CHỈ MÌNH BẠN VÀO ĐƯỢC
+                const myEmail = "email-cua-ban@gmail.com"; 
+                
+                if (user.email === myEmail || myEmail === "email-cua-ban@gmail.com") {
+                    document.getElementById('user-name').innerText = user.displayName;
+                    document.getElementById('user-photo').src = user.photoURL;
+                    showSection('game-section');
+                } else {
+                    alert("Truy cập bị từ chối!");
+                    signOut(auth);
+                }
+            } else {
+                showSection('auth-section');
+            }
+        });
+
+        document.getElementById('loginBtn').onclick = () => signInWithPopup(auth, provider);
+        document.getElementById('logoutBtn').onclick = () => signOut(auth);
+        
+        document.getElementById('spinBtn').onclick = () => {
+            const challenges = ["Hôn nhẹ vào má", "Nhìn nhau 1 phút", "Cùng uống 1 ngụm nước", "Kể 1 bí mật"];
+            const random = challenges[Math.floor(Math.random() * challenges.length)];
+            document.getElementById('challenge-box').innerText = random;
+        };
+    </script>
+</body>
+</html>
