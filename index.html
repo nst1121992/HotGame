@@ -3,187 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hot Couple - Extreme Challenge</title>
+    <title>Hot Couple - TEST MODE</title>
     <style>
-        :root { 
-            --primary: #ff0055; 
-            --dark-bg: #0a0a0a;
-            --card-bg: #1a1a1a;
-            --accent: #00f2ff;
-        }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: var(--dark-bg); 
-            color: white; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            margin: 0; 
-            overflow: hidden;
-        }
-        /* Hiệu ứng nền neon */
-        body::before {
-            content: "";
-            position: absolute;
-            width: 150%; height: 150%;
-            background: radial-gradient(circle, rgba(255,0,85,0.1) 0%, rgba(0,0,0,1) 70%);
-            z-index: -1;
-        }
-
-        .container { 
-            background: var(--card-bg); 
-            padding: 30px; 
-            border-radius: 30px; 
-            border: 2px solid #333; 
-            width: 340px; 
-            text-align: center; 
-            display: none; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .active { display: block; animation: fadeIn 0.5s ease; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .btn-google { background: white; color: #444; padding: 12px; border-radius: 12px; border: none; width: 100%; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; margin-bottom: 15px;}
+        :root { --primary: #ff0055; --accent: #00f2ff; --bg: #0a0a0a; --card: #1a1a1a; }
+        body { font-family: 'Arial', sans-serif; background: var(--bg); color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background: var(--card); padding: 25px; border-radius: 25px; width: 340px; text-align: center; display: none; box-shadow: 0 0 20px rgba(255,0,85,0.2); border: 1px solid #333; }
+        .active { display: block; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         
-        .btn-main { 
-            background: linear-gradient(45deg, var(--primary), #ff5e00);
-            color: white; padding: 18px; border-radius: 50px; border: none; 
-            width: 100%; font-size: 1.1rem; font-weight: bold; cursor: pointer; 
-            margin-top: 15px; box-shadow: 0 5px 15px rgba(255, 0, 85, 0.4);
-            transition: 0.3s;
-        }
+        /* Menu Game */
+        .game-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .game-card { background: #222; padding: 20px 10px; border-radius: 15px; cursor: pointer; border: 1px solid #333; transition: 0.3s; font-weight: bold; }
+        .game-card:hover { border-color: var(--primary); background: #2a2a2a; color: var(--primary); }
+        
+        /* Cấp độ */
+        .lv-selector { display: flex; gap: 5px; margin-bottom: 15px; background: #000; padding: 5px; border-radius: 12px; }
+        .lv-btn { padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; flex: 1; font-size: 11px; transition: 0.2s; opacity: 0.6; }
+        .lv-btn.selected { opacity: 1; transform: scale(1.05); border: 1px solid white; }
+        .lv1 { background: #4caf50; } .lv2 { background: #2196f3; } .lv3 { background: #ff9800; } .lv4 { background: #f44336; }
+        
+        .btn-main { background: var(--primary); color: white; padding: 18px; border-radius: 50px; border: none; width: 100%; font-weight: bold; margin-top: 15px; cursor: pointer; font-size: 16px; box-shadow: 0 5px 15px rgba(255,0,85,0.3); }
         .btn-main:active { transform: scale(0.95); }
 
-        .user-avatar { width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 10px; object-fit: cover;}
-        
-        #challenge-box { 
-            background: rgba(255, 255, 255, 0.05); 
-            color: #fff; 
-            padding: 30px 20px; 
-            border-radius: 20px; 
-            font-size: 1.2rem;
-            font-weight: bold; 
-            margin: 25px 0; 
-            min-height: 80px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            border: 1px dashed var(--primary);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .spinning { animation: shake 0.1s infinite; color: var(--accent) !important; }
-        @keyframes shake { 0% { transform: translate(1px, 1px); } 50% { transform: translate(-1px, -1px); } 100% { transform: translate(1px, -1px); } }
-
-        .difficulty-tag {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            padding: 4px 12px;
-            border-radius: 10px;
-            background: var(--primary);
-            margin-bottom: 10px;
-            display: inline-block;
-        }
+        #display-area { font-size: 60px; margin: 30px 0; min-height: 80px; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        #text-result { font-size: 18px; font-weight: bold; color: var(--accent); padding: 10px; min-height: 50px; }
+        .shake { animation: shake 0.5s infinite; }
+        @keyframes shake { 0% { transform: rotate(0deg); } 25% { transform: rotate(10deg); } 75% { transform: rotate(-10deg); } 100% { transform: rotate(0deg); } }
     </style>
 </head>
 <body>
 
-    <div id="loading-section" class="container active">
-        <div class="spinning" style="font-size: 2rem;">💖</div>
-        <p id="loading-text" style="margin-top: 15px;">ĐANG KHỞI TẠO...</p>
-    </div>
-
-    <div id="auth-section" class="container">
-        <h1 style="color: var(--primary); letter-spacing: 2px;">HOT COUPLE</h1>
-        <p style="color: #888; margin-bottom: 30px;">Hâm nóng tình cảm của bạn</p>
-        <button class="btn-google" id="loginBtn">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-            Tiếp tục với Google
-        </button>
-    </div>
-
-    <div id="game-section" class="container">
-        <img id="user-photo" class="user-avatar" src="" alt="Avatar">
-        <div id="user-name" style="font-size: 0.9rem; color: #aaa; margin-bottom: 10px;"></div>
+    <div id="menu-section" class="container active">
+        <h2 style="color: var(--primary); margin-bottom: 5px;">HOT COUPLE</h2>
+        <p style="color: #666; font-size: 12px; margin-bottom: 25px;">CHẾ ĐỘ KIỂM TRA (KHÔNG LOGIN)</p>
         
-        <span class="difficulty-tag" id="level-tag">Sẵn sàng</span>
-        <div id="challenge-box">Bấm để bắt đầu!</div>
-        
-        <button class="btn-main" id="spinBtn">XOAY THỬ THÁCH 🎲</button>
-        <button id="logoutBtn" style="background:none; border:none; color: #444; margin-top: 25px; cursor:pointer; font-size: 0.8rem;">Đăng xuất</button>
+        <div class="game-grid">
+            <div class="game-card" onclick="openGame('dice')">🎲<br>Xúc Xắc</div>
+            <div class="game-card" onclick="openGame('coin')">🪙<br>Đồng Xu</div>
+            <div class="game-card" onclick="openGame('card')">🃏<br>Lật Bài</div>
+            <div class="game-card" onclick="openGame('spin')">🎡<br>Vòng Quay</div>
+        </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    <div id="game-play-section" class="container">
+        <div style="overflow: hidden; margin-bottom: 10px;">
+            <button onclick="showSection('menu-section')" style="float:left; background:none; border:none; color:#888; cursor:pointer; font-size: 14px;">⬅ Trở về Menu</button>
+        </div>
+        
+        <h3 id="game-title" style="color: var(--primary);">Trò chơi</h3>
+        
+        <div class="lv-selector">
+            <button class="lv-btn lv1 selected" id="btn-lv1" onclick="setLv(1)">NHẸ</button>
+            <button class="lv-btn lv2" id="btn-lv2" onclick="setLv(2)">VUI</button>
+            <button class="lv-btn lv3" id="btn-lv3" onclick="setLv(3)">YÊU</button>
+            <button class="lv-btn lv4" id="btn-lv4" onclick="setLv(4)">HOT</button>
+        </div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDlswEZUfys_PJ7337YOz4t_MaHwjnuNDY",
-            authDomain: "hot-couple-game-21db1.firebaseapp.com",
-            projectId: "hot-couple-game-21db1",
-            storageBucket: "hot-couple-game-21db1.firebasestorage.app",
-            messagingSenderId: "1074792311940",
-            appId: "1:1074792311940:web:21118ed565a30ca33126d1",
-            measurementId: "G-BFMM51ZKND"
+        <div id="display-area">🎲</div>
+        <div id="text-result">Sẵn sàng chưa?</div>
+        
+        <button class="btn-main" id="actionBtn">BẮT ĐẦU CHƠI</button>
+    </div>
+
+    <script>
+        let currentLv = 1;
+        let currentGame = 'dice';
+
+        // Hệ thống thử thách 4 cấp độ
+        const challenges = {
+            1: ["Khen đối phương 1 câu thật lòng", "Nhéo tai đối phương nhẹ nhàng", "Cùng chụp 1 kiểu ảnh dìm hàng", "Xoa đầu đối phương"],
+            2: ["Kể 1 tật xấu của người kia mà bạn thấy đáng yêu", "Cõng đối phương đi 1 vòng quanh phòng", "Làm mặt xấu trong 10 giây", "Nhảy một điệu buồn cười"],
+            3: ["Hôn vào má đối phương 3 lần", "Nói thầm 'Anh/Em yêu bạn' vào tai", "Ôm chặt đối phương từ phía sau", "Nắm tay nhau trong 2 phút"],
+            4: ["Hôn môi sâu trong 10 giây", "Cắn nhẹ vào vai hoặc tai đối phương", "Thực hiện 1 yêu cầu 'nhạy cảm' từ người kia", "Massage vùng cổ của đối phương"]
         };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
-        const challenges = [
-            { text: "Hôn nhẹ vào trán đối phương", lv: "Dễ thương" },
-            { text: "Nhìn vào mắt nhau 30 giây không cười", lv: "Gắn kết" },
-            { text: "Kể về kỉ niệm bạn nhớ nhất về người kia", lv: "Tình cảm" },
-            { text: "Được yêu cầu đối phương làm một việc bất kì", lv: "Quyền lực" },
-            { text: "Cùng uống chung một ly nước", lv: "Chia sẻ" },
-            { text: "Thì thầm vào tai đối phương một điều ngọt ngào", lv: "Hấp dẫn" },
-            { text: "Massage vai cho đối phương trong 2 phút", lv: "Chăm sóc" },
-            { text: "Nắm tay nhau trong 3 lượt quay tới", lv: "Gần gũi" }
-        ];
-
-        const showSection = (id) => {
+        function showSection(id) {
             document.querySelectorAll('.container').forEach(c => c.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-        };
+        }
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const myEmail = "nst1121992@gmail.com"; 
-                if (user.email === myEmail) {
-                    document.getElementById('user-name').innerText = "Chào, " + user.displayName;
-                    document.getElementById('user-photo').src = user.photoURL;
-                    showSection('game-section');
-                } else {
-                    alert("Rất tiếc, ứng dụng này đang trong chế độ riêng tư!");
-                    signOut(auth);
-                }
-            } else {
-                showSection('auth-section');
-            }
-        });
+        function openGame(type) {
+            currentGame = type;
+            const titles = { 'dice': 'Xúc Xắc Tình Yêu', 'coin': 'Đồng Xu Định Mệnh', 'card': 'Lá Bài Thử Thách', 'spin': 'Vòng Quay Bí Ẩn' };
+            const icons = { 'dice': '🎲', 'coin': '🪙', 'card': '🃏', 'spin': '🎡' };
+            
+            document.getElementById('game-title').innerText = titles[type];
+            document.getElementById('display-area').innerText = icons[type];
+            document.getElementById('text-result').innerText = "Bấm nút để bắt đầu";
+            showSection('game-play-section');
+        }
 
-        document.getElementById('loginBtn').onclick = () => signInWithPopup(auth, provider);
-        document.getElementById('logoutBtn').onclick = () => signOut(auth);
-        
-        document.getElementById('spinBtn').onclick = () => {
-            const box = document.getElementById('challenge-box');
-            const tag = document.getElementById('level-tag');
+        function setLv(lv) {
+            currentLv = lv;
+            document.querySelectorAll('.lv-btn').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('btn-lv' + lv).classList.add('selected');
+        }
+
+        document.getElementById('actionBtn').onclick = () => {
+            const display = document.getElementById('display-area');
+            const resText = document.getElementById('text-result');
             
-            // Hiệu ứng xoay
-            box.classList.add('spinning');
-            box.innerText = "ĐANG CHỌN...";
-            
+            // Hiệu ứng rung khi chọn
+            display.classList.add('shake');
+            resText.innerText = "Đang chọn...";
+
             setTimeout(() => {
-                const random = challenges[Math.floor(Math.random() * challenges.length)];
-                box.classList.remove('spinning');
-                box.innerText = random.text;
-                tag.innerText = random.lv;
-                tag.style.background = "#00f2ff";
-                tag.style.color = "#000";
-            }, 800);
+                display.classList.remove('shake');
+                
+                // Logic hiển thị theo trò chơi
+                if(currentGame === 'dice') {
+                    const dice = ["⚀","⚁","⚂","⚃","⚄","⚅"];
+                    display.innerText = dice[Math.floor(Math.random() * 6)];
+                } else if(currentGame === 'coin') {
+                    display.innerText = Math.random() > 0.5 ? "🌞" : "🌜";
+                    resText.innerText = display.innerText === "🌞" ? "(Mặt Ngửa)" : "(Mặt Sấp)";
+                } else if(currentGame === 'card') {
+                    const cards = ["♥","♦","♣","♠"];
+                    display.innerText = cards[Math.floor(Math.random() * 4)];
+                } else {
+                    display.innerText = "✨";
+                }
+
+                // Chọn thử thách
+                const list = challenges[currentLv];
+                const randomText = list[Math.floor(Math.random() * list.length)];
+                
+                if(currentGame === 'coin') {
+                    resText.innerText += " - " + randomText;
+                } else {
+                    resText.innerText = randomText;
+                }
+            }, 600);
         };
     </script>
 </body>
