@@ -3,51 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hot Couple - Wild Experience</title>
+    <title>Hot Couple - Luxury Experience</title>
     <style>
         :root { --primary: #ff0055; --accent: #00f2ff; }
+        
         body, html { 
-            height: 100%; margin: 0; font-family: 'Segoe UI', sans-serif; color: white;
-            display: flex; justify-content: center; align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+            height: 100%; margin: 0; 
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* HÌNH NỀN SEXY NGHỆ THUẬT - ĐÃ SỬA LẠI ĐỂ HIỂN THỊ RÕ */
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                         url('https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1974&auto=format&fit=crop') no-repeat center center fixed;
             background-size: cover;
         }
+
+        /* Hiệu ứng kính mờ cho khung Game */
         .container { 
-            background: rgba(0, 0, 0, 0.85); padding: 35px 25px; border-radius: 40px; 
-            width: 340px; text-align: center; display: none; backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 25px 50px rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.75); 
+            padding: 35px 25px; 
+            border-radius: 40px; 
+            width: 340px; 
+            text-align: center; 
+            display: none; 
+            backdrop-filter: blur(20px); /* Làm mờ nền phía sau khung */
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
+        
         .active { display: block; animation: fadeInUp 0.5s ease; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .title { font-size: 24px; font-weight: 900; margin-bottom: 30px; letter-spacing: 3px; color: var(--primary); text-transform: uppercase; }
+
+        .title { font-size: 22px; font-weight: 800; margin-bottom: 30px; letter-spacing: 3px; color: var(--primary); text-transform: uppercase; }
+
+        /* Grid menu với ảnh 3D xịn hơn */
         .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .card { 
-            background: rgba(255,255,255,0.08); padding: 20px 10px; border-radius: 25px; 
-            cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08); 
+            padding: 20px 10px; 
+            border-radius: 25px; 
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .card:hover { background: var(--primary); transform: scale(1.05); }
-        .card img { width: 70px; height: 70px; object-fit: contain; margin-bottom: 12px; }
+        .card img { width: 70px; height: 70px; object-fit: contain; margin-bottom: 12px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
+
+        /* Nút cấp độ thiết kế lại dạng bo cong mềm mại */
         .lv-item { 
             padding: 16px; border-radius: 20px; border: none; font-weight: bold; 
-            cursor: pointer; margin-bottom: 12px; width: 100%; font-size: 15px; color: white;
+            cursor: pointer; margin-bottom: 12px; width: 100%; font-size: 15px;
+            color: white; transition: 0.3s;
         }
         .l1 { background: linear-gradient(to right, #11998e, #38ef7d); }
         .l2 { background: linear-gradient(to right, #00b4db, #0083b0); }
         .l3 { background: linear-gradient(to right, #ffb347, #ffcc33); }
-        .l4 { background: linear-gradient(to right, #e52d27, #b31217); box-shadow: 0 0 25px rgba(229, 45, 39, 0.6); animation: heartBeat 1.5s infinite; }
-        @keyframes heartBeat { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        .l4 { background: linear-gradient(to right, #e52d27, #b31217); box-shadow: 0 0 20px rgba(229, 45, 39, 0.5); }
+        
+        /* Hiển thị 3D Game */
+        #display-box { margin: 20px 0; }
         #display-box img { width: 130px; height: 130px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8)); }
+
         #result-text { 
-            margin: 20px 0; font-size: 20px; font-weight: 700; min-height: 80px;
+            margin: 20px 0; font-size: 19px; font-weight: 600; min-height: 70px;
             color: #fff; line-height: 1.4; display: flex; align-items: center; justify-content: center;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
         }
+
         .btn-action { 
             background: var(--primary); color: white; padding: 20px; border-radius: 50px; 
             border: none; width: 100%; font-weight: 800; cursor: pointer; font-size: 18px;
+            box-shadow: 0 10px 20px rgba(255, 0, 85, 0.3);
         }
-        .back-btn { background: rgba(255,255,255,0.1); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; position: absolute; left: 20px; top: 20px; }
+        
+        .back-btn { background: rgba(255,255,255,0.1); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; position: absolute; left: 20px; top: 20px; display: flex; align-items: center; justify-content: center; }
+
         .spin-anim { animation: rotate3d 0.8s ease-in-out; }
         @keyframes rotate3d { 0% { transform: rotateY(0); } 100% { transform: rotateY(360deg); } }
     </style>
@@ -55,56 +86,76 @@
 <body>
 
     <div id="step-1" class="container active">
-        <div class="title">CHỌN TRÒ CHƠI</div>
+        <div class="title">GAME SELECTION</div>
         <div class="grid-menu">
-            <div class="card" onclick="pickGame('dice', 'https://cdn3d.iconscout.com/3d/premium/thumb/dice-5654067-4714856.png')"><img src="https://cdn3d.iconscout.com/3d/premium/thumb/dice-5654067-4714856.png"><div>Xúc Xắc</div></div>
-            <div class="card" onclick="pickGame('coin', 'https://cdn3d.iconscout.com/3d/premium/thumb/coin-4811493-4007629.png')"><img src="https://cdn3d.iconscout.com/3d/premium/thumb/coin-4811493-4007629.png"><div>Đồng Xu</div></div>
-            <div class="card" onclick="pickGame('card', 'https://cdn3d.iconscout.com/3d/premium/thumb/playing-cards-5182902-4322497.png')"><img src="https://cdn3d.iconscout.com/3d/premium/thumb/playing-cards-5182902-4322497.png"><div>Lật Bài</div></div>
-            <div class="card" onclick="pickGame('spin', 'https://cdn3d.iconscout.com/3d/premium/thumb/spin-wheel-5349141-4470104.png')"><img src="https://cdn3d.iconscout.com/3d/premium/thumb/spin-wheel-5349141-4470104.png"><div>Vòng Quay</div></div>
+            <div class="card" onclick="pickGame('dice', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png')">
+                <img src="https://cdn3d.iconscout.com/3d/premium/thumb/dice-5654067-4714856.png"><div>Xúc Xắc</div>
+            </div>
+            <div class="card" onclick="pickGame('coin', 'https://cdn3d.iconscout.com/3d/premium/thumb/coin-4811493-4007629.png')">
+                <img src="https://cdn3d.iconscout.com/3d/premium/thumb/coin-4811493-4007629.png"><div>Đồng Xu</div>
+            </div>
+            <div class="card" onclick="pickGame('card', 'https://cdn3d.iconscout.com/3d/premium/thumb/playing-cards-5182902-4322497.png')">
+                <img src="https://cdn3d.iconscout.com/3d/premium/thumb/playing-cards-5182902-4322497.png"><div>Lật Bài</div>
+            </div>
+            <div class="card" onclick="pickGame('spin', 'https://cdn3d.iconscout.com/3d/premium/thumb/spin-wheel-5349141-4470104.png')">
+                <img src="https://cdn3d.iconscout.com/3d/premium/thumb/spin-wheel-5349141-4470104.png"><div>Vòng Quay</div>
+            </div>
         </div>
     </div>
 
     <div id="step-2" class="container">
         <button class="back-btn" onclick="goBack(1)">✕</button>
-        <div class="title">ĐỘ DÂM</div>
+        <div class="title">INTENSITY</div>
         <div class="lv-list">
-            <button class="lv-item l1" onclick="pickLevel(1)">KHỞI ĐỘNG</button>
-            <button class="lv-item l2" onclick="pickLevel(2)">KÍCH THÍCH</button>
-            <button class="lv-item l3" onclick="pickLevel(3)">HƯ HỎNG</button>
-            <button class="lv-item l4" onclick="pickLevel(4)">CỰC KHOÁI 💦</button>
+            <button class="lv-item l1" onclick="pickLevel(1)">SOFT - Nhẹ Nhàng</button>
+            <button class="lv-item l2" onclick="pickLevel(2)">FUNNY - Vui Vẻ</button>
+            <button class="lv-item l3" onclick="pickLevel(3)">LOVELY - Lãng Mạn</button>
+            <button class="lv-item l4" onclick="pickLevel(4)">HOT & WILD 🔥</button>
         </div>
     </div>
 
     <div id="step-3" class="container">
         <button class="back-btn" onclick="goBack(2)">✕</button>
-        <div id="play-title" style="font-size: 12px; letter-spacing: 2px;">VẬN MAY CỦA BẠN</div>
+        <div id="play-title" style="margin-bottom: 10px; font-size: 12px; letter-spacing: 2px;">READY TO PLAY?</div>
         <div id="display-box"><img id="main-img" src=""></div>
-        <div id="result-text">Sẵn sàng để "hư" chưa?</div>
-        <button class="btn-action" onclick="playNow()">CHƠI LUÔN</button>
+        <div id="result-text">Chạm để bắt đầu!</div>
+        <button class="btn-action" onclick="playNow()">BẮT ĐẦU CHƠI</button>
     </div>
 
     <script>
         let gameType = ''; let gameIcon = ''; let level = 1;
 
         const challenges = {
-            1: ["Hôn sâu vào cổ 30 giây", "Nhìn thẳng mắt nhau, liếm môi khiêu khích", "Thì thầm vào tai điều bạn muốn làm với người ấy", "Massage vùng vai nhưng tay phải chạm nhẹ vào ngực"],
-            2: ["Dùng lưỡi vẽ vòng tròn quanh tai đối phương", "Hôn môi kiểu Pháp, lưỡi phải quấn lấy nhau thật chặt", "Cho tay vào trong áo đối phương và xoa bóp 1 phút", "Cắn nhẹ vào môi dưới của đối phương đến khi đỏ lên"],
-            3: ["Cởi áo đối phương chỉ bằng một tay (hoặc bằng răng)", "Liếm từ xương quai xanh lên đến thùy tai", "Vừa hôn vừa để tay mơn trớn vùng nhạy cảm của người ấy", "Để đối phương nằm xuống và bạn liếm khắp vùng bụng"],
-            4: ["Dùng miệng bú nhẹ vào nhũ hoa của đối phương", "Dùng tay kích thích 'vùng kín' của người ấy trong 2 phút", "Thực hiện tư thế mà bạn thấy 'dâm' nhất ngay lập tức", "Cởi hết đồ lót của đối phương bằng răng"]
+            1: ["Khen đối phương 1 câu chân thành nhất", "Xoa đầu đối phương trong 30s", "Chụp 1 tấm ảnh chung thật cute", "Nắm tay nhau trong suốt lượt sau"],
+            2: ["Làm mặt xấu nhất có thể cho đối phương xem", "Kể 1 bí mật xấu hổ nhất của bạn", "Cho đối phương xem tấm ảnh gần nhất trong máy", "Hát 1 đoạn bài hát yêu thích"],
+            3: ["Hôn vào cổ đối phương", "Nói thầm 1 câu ngọt ngào nhất vào tai", "Ôm chặt từ phía sau trong 1 phút", "Cùng uống chung 1 ngụm nước"],
+            4: ["Hôn môi sâu kiểu Pháp trong 30 giây", "Massage vùng đùi của đối phương", "Cởi một món đồ trên người đối phương", "Thực hiện một yêu cầu táo bạo bất kì"]
         };
 
         function show(s) {
             document.querySelectorAll('.container').forEach(c => c.classList.remove('active'));
             document.getElementById('step-' + s).classList.add('active');
         }
-        function pickGame(t, img) { gameType = t; gameIcon = img; show(2); }
-        function pickLevel(l) { level = l; document.getElementById('main-img').src = gameIcon; show(3); }
+
+        function pickGame(t, img) { 
+            gameType = t; gameIcon = img; show(2); 
+        }
+
+        function pickLevel(l) { 
+            level = l; 
+            document.getElementById('main-img').src = gameIcon;
+            document.getElementById('result-text').innerText = "Vận may của bạn là gì?";
+            show(3); 
+        }
+
         function goBack(s) { show(s); }
+
         function playNow() {
             const img = document.getElementById('main-img');
             const res = document.getElementById('result-text');
             img.classList.add('spin-anim');
-            res.innerText = "ĐANG CHỌN...";
+            res.innerText = "CHỜ CHÚT...";
+
             setTimeout(() => {
                 img.classList.remove('spin-anim');
                 const list = challenges[level];
