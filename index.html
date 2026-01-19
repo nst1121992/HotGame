@@ -3,44 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hot Couple - Google Login</title>
+    <title>Hot Couple - Extreme Challenge</title>
     <style>
-        :root { --primary: #ff0055; --google-blue: #4285F4; }
-        body { font-family: 'Arial', sans-serif; background: #0a0a0a; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { background: #1a1a1a; padding: 40px 30px; border-radius: 25px; border: 1px solid #333; width: 320px; text-align: center; display: none; }
-        .active { display: block; }
-        .btn-google { background: white; color: #444; padding: 12px; border-radius: 8px; border: none; width: 100%; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; }
-        .btn-google:hover { background: #eee; }
-        .btn-google img { width: 20px; }
-        .btn-main { background: var(--primary); color: white; padding: 15px; border-radius: 50px; border: none; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .user-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--primary); margin-bottom: 10px; }
-        #loading-text { color: var(--primary); font-weight: bold; }
+        :root { 
+            --primary: #ff0055; 
+            --dark-bg: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --accent: #00f2ff;
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: var(--dark-bg); 
+            color: white; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            overflow: hidden;
+        }
+        /* Hiệu ứng nền neon */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 150%; height: 150%;
+            background: radial-gradient(circle, rgba(255,0,85,0.1) 0%, rgba(0,0,0,1) 70%);
+            z-index: -1;
+        }
+
+        .container { 
+            background: var(--card-bg); 
+            padding: 30px; 
+            border-radius: 30px; 
+            border: 2px solid #333; 
+            width: 340px; 
+            text-align: center; 
+            display: none; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .active { display: block; animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-google { background: white; color: #444; padding: 12px; border-radius: 12px; border: none; width: 100%; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; margin-bottom: 15px;}
+        
+        .btn-main { 
+            background: linear-gradient(45deg, var(--primary), #ff5e00);
+            color: white; padding: 18px; border-radius: 50px; border: none; 
+            width: 100%; font-size: 1.1rem; font-weight: bold; cursor: pointer; 
+            margin-top: 15px; box-shadow: 0 5px 15px rgba(255, 0, 85, 0.4);
+            transition: 0.3s;
+        }
+        .btn-main:active { transform: scale(0.95); }
+
+        .user-avatar { width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 10px; object-fit: cover;}
+        
+        #challenge-box { 
+            background: rgba(255, 255, 255, 0.05); 
+            color: #fff; 
+            padding: 30px 20px; 
+            border-radius: 20px; 
+            font-size: 1.2rem;
+            font-weight: bold; 
+            margin: 25px 0; 
+            min-height: 80px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            border: 1px dashed var(--primary);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .spinning { animation: shake 0.1s infinite; color: var(--accent) !important; }
+        @keyframes shake { 0% { transform: translate(1px, 1px); } 50% { transform: translate(-1px, -1px); } 100% { transform: translate(1px, -1px); } }
+
+        .difficulty-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 10px;
+            background: var(--primary);
+            margin-bottom: 10px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
 
     <div id="loading-section" class="container active">
-        <p id="loading-text">ĐANG KIỂM TRA PHIÊN...</p>
+        <div class="spinning" style="font-size: 2rem;">💖</div>
+        <p id="loading-text" style="margin-top: 15px;">ĐANG KHỞI TẠO...</p>
     </div>
 
     <div id="auth-section" class="container">
-        <h2 style="color: var(--primary); margin-bottom: 30px;">HOT COUPLE</h2>
-        <p style="font-size: 14px; color: #aaa; margin-bottom: 20px;">Vui lòng đăng nhập để bắt đầu thử thách</p>
+        <h1 style="color: var(--primary); letter-spacing: 2px;">HOT COUPLE</h1>
+        <p style="color: #888; margin-bottom: 30px;">Hâm nóng tình cảm của bạn</p>
         <button class="btn-google" id="loginBtn">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-            Đăng nhập với Google
+            Tiếp tục với Google
         </button>
     </div>
 
     <div id="game-section" class="container">
         <img id="user-photo" class="user-avatar" src="" alt="Avatar">
-        <p id="user-name" style="margin: 5px 0; font-weight: bold;"></p>
-        <h1 style="color: var(--primary);">🔥 THỬ THÁCH 🔥</h1>
-        <div id="challenge-box" style="background: white; color: black; padding: 25_px; border-radius: 15px; font-weight: bold; margin: 20px 0; min-height: 50px; display: flex; align-items: center; justify-content: center;">
-            Sẵn sàng chưa?
-        </div>
-        <button class="btn-main" id="spinBtn">XOAY NGAY 🎲</button>
-        <button id="logoutBtn" style="background:none; border:none; color: #555; margin-top: 25px; cursor:pointer; text-decoration: underline;">Đăng xuất</button>
+        <div id="user-name" style="font-size: 0.9rem; color: #aaa; margin-bottom: 10px;"></div>
+        
+        <span class="difficulty-tag" id="level-tag">Sẵn sàng</span>
+        <div id="challenge-box">Bấm để bắt đầu!</div>
+        
+        <button class="btn-main" id="spinBtn">XOAY THỬ THÁCH 🎲</button>
+        <button id="logoutBtn" style="background:none; border:none; color: #444; margin-top: 25px; cursor:pointer; font-size: 0.8rem;">Đăng xuất</button>
     </div>
 
     <script type="module">
@@ -61,23 +133,31 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
+        const challenges = [
+            { text: "Hôn nhẹ vào trán đối phương", lv: "Dễ thương" },
+            { text: "Nhìn vào mắt nhau 30 giây không cười", lv: "Gắn kết" },
+            { text: "Kể về kỉ niệm bạn nhớ nhất về người kia", lv: "Tình cảm" },
+            { text: "Được yêu cầu đối phương làm một việc bất kì", lv: "Quyền lực" },
+            { text: "Cùng uống chung một ly nước", lv: "Chia sẻ" },
+            { text: "Thì thầm vào tai đối phương một điều ngọt ngào", lv: "Hấp dẫn" },
+            { text: "Massage vai cho đối phương trong 2 phút", lv: "Chăm sóc" },
+            { text: "Nắm tay nhau trong 3 lượt quay tới", lv: "Gần gũi" }
+        ];
+
         const showSection = (id) => {
             document.querySelectorAll('.container').forEach(c => c.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         };
 
-        // Kiểm tra đăng nhập
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // THAY EMAIL CỦA BẠN VÀO ĐÂY ĐỂ CHỈ MÌNH BẠN VÀO ĐƯỢC
                 const myEmail = "nst1121992@gmail.com"; 
-                
-                if (user.email === myEmail || myEmail === "email-cua-ban@gmail.com") {
-                    document.getElementById('user-name').innerText = user.displayName;
+                if (user.email === myEmail) {
+                    document.getElementById('user-name').innerText = "Chào, " + user.displayName;
                     document.getElementById('user-photo').src = user.photoURL;
                     showSection('game-section');
                 } else {
-                    alert("Truy cập bị từ chối!");
+                    alert("Rất tiếc, ứng dụng này đang trong chế độ riêng tư!");
                     signOut(auth);
                 }
             } else {
@@ -89,9 +169,21 @@
         document.getElementById('logoutBtn').onclick = () => signOut(auth);
         
         document.getElementById('spinBtn').onclick = () => {
-            const challenges = ["Hôn nhẹ vào má", "Nhìn nhau 1 phút", "Cùng uống 1 ngụm nước", "Kể 1 bí mật"];
-            const random = challenges[Math.floor(Math.random() * challenges.length)];
-            document.getElementById('challenge-box').innerText = random;
+            const box = document.getElementById('challenge-box');
+            const tag = document.getElementById('level-tag');
+            
+            // Hiệu ứng xoay
+            box.classList.add('spinning');
+            box.innerText = "ĐANG CHỌN...";
+            
+            setTimeout(() => {
+                const random = challenges[Math.floor(Math.random() * challenges.length)];
+                box.classList.remove('spinning');
+                box.innerText = random.text;
+                tag.innerText = random.lv;
+                tag.style.background = "#00f2ff";
+                tag.style.color = "#000";
+            }, 800);
         };
     </script>
 </body>
