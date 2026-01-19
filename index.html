@@ -3,38 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hot Couple - Custom Game</title>
+    <title>Hot Couple - Luxury Edition</title>
     <style>
-        :root { --primary: #ff0055; --accent: #00f2ff; --bg: #0a0a0a; --card: #1a1a1a; }
-        body { font-family: 'Arial', sans-serif; background: var(--bg); color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; overflow-x: hidden; }
-        .container { background: var(--card); padding: 25px; border-radius: 30px; width: 340px; text-align: center; display: none; box-shadow: 0 0 30px rgba(255,0,85,0.15); border: 1px solid #333; position: relative; }
-        .active { display: block; animation: slideIn 0.3s ease-out; }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        :root { --primary: #ff0055; --accent: #00f2ff; --bg: #050505; }
         
-        /* Menu Chọn Trò Chơi */
-        .title { color: var(--primary); font-size: 24px; font-weight: bold; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255,0,85,0.5); }
-        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .card { background: #222; padding: 25px 10px; border-radius: 20px; cursor: pointer; border: 1px solid #333; transition: 0.3s; }
-        .card:hover { border-color: var(--primary); transform: translateY(-5px); background: #2a2a2a; }
-        .card i { font-size: 40px; display: block; margin-bottom: 10px; }
+        body { 
+            font-family: 'Arial', sans-serif; 
+            background: var(--bg);
+            color: white; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0;
+            overflow: hidden;
+            /* Ảnh nền sexy, mờ ảo tạo không khí */
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                              url('https://images.unsplash.com/photo-1518104593124-ac2e82a5eb9d?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
 
-        /* Màn hình Chọn Cấp Độ */
-        .lv-list { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-        .lv-item { padding: 15px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.2s; position: relative; overflow: hidden; }
-        .lv-item::after { content: '➤'; position: absolute; right: 20px; opacity: 0.5; }
-        .l1 { background: #4caf50; color: white; }
-        .l2 { background: #2196f3; color: white; }
-        .l3 { background: #ff9800; color: white; }
-        .l4 { background: #f44336; color: white; box-shadow: 0 0 15px rgba(244,67,54,0.4); }
-
-        /* Màn hình Chơi */
-        #display-box { font-size: 80px; margin: 30px 0; min-height: 100px; display: flex; align-items: center; justify-content: center; }
-        #result-text { font-size: 18px; line-height: 1.5; color: var(--accent); font-weight: bold; padding: 15px; border-radius: 15px; background: rgba(0,242,255,0.05); }
-        .btn-action { background: var(--primary); color: white; padding: 18px; border-radius: 50px; border: none; width: 100%; font-weight: bold; cursor: pointer; margin-top: 20px; font-size: 18px; }
+        .container { 
+            background: rgba(26, 26, 26, 0.9); 
+            padding: 30px; 
+            border-radius: 40px; 
+            width: 350px; 
+            text-align: center; 
+            display: none; 
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
         
-        .back-btn { position: absolute; top: 20px; left: 20px; background: none; border: none; color: #666; cursor: pointer; font-size: 20px; }
-        .shake { animation: shake 0.4s ease-in-out; }
-        @keyframes shake { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(10deg); } 75% { transform: rotate(-10deg); } }
+        .active { display: block; animation: zoomIn 0.3s ease; }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+        .title { font-size: 26px; font-weight: bold; margin-bottom: 25px; letter-spacing: 2px; color: #fff; }
+
+        /* Grid Menu với ảnh minh họa */
+        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { 
+            background: rgba(255,255,255,0.05); 
+            padding: 20px 10px; 
+            border-radius: 25px; 
+            cursor: pointer; 
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .card:hover { background: var(--primary); transform: translateY(-5px); }
+        .card img { width: 60px; height: 60px; object-fit: contain; margin-bottom: 10px; }
+
+        /* Nút cấp độ sang trọng */
+        .lv-item { 
+            padding: 18px; border-radius: 20px; border: none; font-weight: bold; 
+            cursor: pointer; margin-bottom: 15px; width: 100%; font-size: 16px;
+            transition: 0.3s; text-transform: uppercase;
+        }
+        .l1 { background: linear-gradient(90deg, #56ab2f, #a8e063); }
+        .l2 { background: linear-gradient(90deg, #00c6ff, #0072ff); }
+        .l3 { background: linear-gradient(90deg, #f7971e, #ffd200); }
+        .l4 { background: linear-gradient(90deg, #ed213a, #93291e); animation: pulse 2s infinite; }
+        
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(237, 33, 58, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(237, 33, 58, 0); } 100% { box-shadow: 0 0 0 0 rgba(237, 33, 58, 0); } }
+
+        /* Khu vực hiển thị kết quả 3D */
+        #display-box img { width: 120px; height: 120px; object-fit: contain; }
+        #result-text { 
+            margin-top: 20px; font-size: 18px; font-style: italic; 
+            color: var(--accent); min-height: 60px; display: flex; align-items: center; justify-content: center;
+        }
+
+        .btn-action { 
+            background: white; color: black; padding: 18px; border-radius: 50px; 
+            border: none; width: 100%; font-weight: bold; cursor: pointer; font-size: 18px;
+        }
+        
+        .back-btn { background: none; border: none; color: #fff; cursor: pointer; font-size: 24px; position: absolute; left: 20px; top: 25px; }
+
+        .shake-img { animation: shakeImg 0.5s ease-in-out; }
+        @keyframes shakeImg { 0% { transform: rotate(0); } 25% { transform: rotate(15deg); } 75% { transform: rotate(-15deg); } 100% { transform: rotate(0); } }
     </style>
 </head>
 <body>
@@ -42,31 +90,38 @@
     <div id="step-1" class="container active">
         <div class="title">CHỌN KIỂU CHƠI</div>
         <div class="grid-menu">
-            <div class="card" onclick="pickGame('dice', '🎲')"><i>🎲</i>Xúc Xắc</div>
-            <div class="card" onclick="openCoinStep()"><i>🪙</i>Đồng Xu</div>
-            <div class="card" onclick="pickGame('card', '🃏')"><i>🃏</i>Lật Bài</div>
-            <div class="card" onclick="pickGame('spin', '🎡')"><i>🎡</i>Vòng Quay</div>
+            <div class="card" onclick="pickGame('dice', 'https://cdn-icons-png.flaticon.com/512/8212/8212730.png')">
+                <img src="https://cdn-icons-png.flaticon.com/512/8212/8212730.png"><div>Xúc Xắc</div>
+            </div>
+            <div class="card" onclick="pickGame('coin', 'https://cdn-icons-png.flaticon.com/512/1490/1490832.png')">
+                <img src="https://cdn-icons-png.flaticon.com/512/1490/1490832.png"><div>Đồng Xu</div>
+            </div>
+            <div class="card" onclick="pickGame('card', 'https://cdn-icons-png.flaticon.com/512/2163/2163351.png')">
+                <img src="https://cdn-icons-png.flaticon.com/512/2163/2163351.png"><div>Lật Bài</div>
+            </div>
+            <div class="card" onclick="pickGame('spin', 'https://cdn-icons-png.flaticon.com/512/8361/8361024.png')">
+                <img src="https://cdn-icons-png.flaticon.com/512/8361/8361024.png"><div>Vòng Quay</div>
+            </div>
         </div>
     </div>
 
     <div id="step-2" class="container">
-        <button class="back-btn" onclick="goBack(1)">✕</button>
-        <div class="title">CHỌN CHẾ ĐỘ</div>
-        <div id="game-subtitle" style="color:#888; margin-top:-15px; margin-bottom:20px;"></div>
+        <button class="back-btn" onclick="goBack(1)">←</button>
+        <div class="title">CHỌN CẤP ĐỘ</div>
         <div class="lv-list">
-            <button class="lv-item l1" onclick="pickLevel(1)">NHẸ NHÀNG</button>
-            <button class="lv-item l2" onclick="pickLevel(2)">VUI VẺ</button>
-            <button class="lv-item l3" onclick="pickLevel(3)">LÃNG MẠN</button>
-            <button class="lv-item l4" onclick="pickLevel(4)">NÓNG BỎNG 🔥</button>
+            <button class="lv-item l1" onclick="pickLevel(1)">Nhẹ Nhàng</button>
+            <button class="lv-item l2" onclick="pickLevel(2)">Vui Vẻ</button>
+            <button class="lv-item l3" onclick="pickLevel(3)">Lãng Mạn</button>
+            <button class="lv-item l4" onclick="pickLevel(4)">Nóng Bỏng 🔥</button>
         </div>
     </div>
 
     <div id="step-3" class="container">
-        <button class="back-btn" onclick="goBack(2)">✕</button>
-        <div id="play-title" style="font-weight:bold; color:var(--primary); margin-bottom:10px;"></div>
-        <div id="display-box">🎲</div>
-        <div id="result-text">Sẵn sàng trải nghiệm?</div>
-        <button class="btn-action" onclick="playNow()">BẮT ĐẦU</button>
+        <button class="back-btn" onclick="goBack(2)">←</button>
+        <div id="play-title" style="margin-bottom: 20px; font-weight: bold; opacity: 0.7;"></div>
+        <div id="display-box"><img id="main-img" src=""></div>
+        <div id="result-text">Sẵn sàng chưa?</div>
+        <button class="btn-action" onclick="playNow()">CHƠI NGAY</button>
     </div>
 
     <script>
@@ -75,61 +130,39 @@
         let level = 1;
 
         const data = {
-            1: ["Khen đối phương 1 câu", "Nắm tay 1 phút", "Cùng chụp ảnh tự sướng", "Xoa đầu nhẹ nhàng"],
-            2: ["Làm mặt xấu 10s", "Kể 1 bí mật nhỏ", "Cõng đối phương 1 vòng", "Nhảy theo 1 điệu nhạc"],
-            3: ["Hôn vào má", "Nói lời yêu thầm kín", "Ôm chặt từ phía sau", "Nhìn nhau 1 phút"],
-            4: ["Hôn môi sâu 10s", "Massage vùng cổ", "Cắn nhẹ vào tai", "Thì thầm điều gợi cảm"]
+            1: ["Khen đối phương 1 câu thật lòng", "Nhéo tai đối phương nhẹ nhàng", "Cùng chụp 1 kiểu ảnh dìm hàng", "Xoa đầu đối phương"],
+            2: ["Làm mặt xấu trong 10 giây", "Kể 1 bí mật nhỏ về bản thân", "Cõng đối phương đi 1 vòng", "Nhảy theo 1 điệu nhạc hot trend"],
+            3: ["Hôn vào má đối phương 3 lần", "Thì thầm 'Anh/Em yêu bạn' vào tai", "Ôm chặt đối phương từ phía sau", "Nắm tay nhau trong 2 phút"],
+            4: ["Hôn môi sâu trong 10 giây", "Cắn nhẹ vào vai hoặc tai đối phương", "Thực hiện 1 yêu cầu nhạy cảm từ người kia", "Massage vùng cổ của đối phương"]
         };
 
-        function show(stepId) {
+        function show(s) {
             document.querySelectorAll('.container').forEach(c => c.classList.remove('active'));
-            document.getElementById('step-' + stepId).classList.add('active');
+            document.getElementById('step-' + s).classList.add('active');
         }
 
-        function pickGame(type, icon) {
-            gameType = type;
-            gameIcon = icon;
-            document.getElementById('game-subtitle').innerText = "Trò chơi: " + icon;
+        function pickGame(t, img) {
+            gameType = t; gameIcon = img;
             show(2);
         }
 
-        // Riêng đồng xu có thể chọn mặt trước (nếu muốn mở rộng) nhưng ở đây làm nhanh
-        function openCoinStep() { pickGame('coin', '🪙'); }
-
-        function pickLevel(lv) {
-            level = lv;
-            document.getElementById('play-title').innerText = "CẤP ĐỘ " + lv;
-            document.getElementById('display-box').innerText = gameIcon;
-            document.getElementById('result-text').innerText = "Bấm nút để thực hiện thử thách";
+        function pickLevel(l) {
+            level = l;
+            document.getElementById('main-img').src = gameIcon;
+            document.getElementById('result-text').innerText = "Chạm nút để bắt đầu";
             show(3);
         }
 
-        function goBack(step) { show(step); }
+        function goBack(s) { show(s); }
 
         function playNow() {
-            const box = document.getElementById('display-box');
+            const img = document.getElementById('main-img');
             const res = document.getElementById('result-text');
-            
-            box.classList.add('shake');
+            img.classList.add('shake-img');
             res.innerText = "Đang quay...";
 
             setTimeout(() => {
-                box.classList.remove('shake');
-                
-                // Logic Game
-                if(gameType === 'dice') {
-                    const dices = ["⚀","⚁","⚂","⚃","⚄","⚅"];
-                    box.innerText = dices[Math.floor(Math.random()*6)];
-                } else if(gameType === 'coin') {
-                    box.innerText = Math.random() > 0.5 ? "🌞" : "🌜";
-                } else if(gameType === 'card') {
-                    const cards = ["♥","♦","♣","♠"];
-                    box.innerText = cards[Math.floor(Math.random()*4)];
-                } else {
-                    box.innerText = "✨";
-                }
-
-                // Chọn thử thách
+                img.classList.remove('shake-img');
                 const list = data[level];
                 res.innerText = list[Math.floor(Math.random() * list.length)];
             }, 600);
