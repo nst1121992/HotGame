@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hot Couple - Google Login</title>
+    <style>
+        :root { --primary: #ff0055; --google-blue: #4285F4; }
+        body { font-family: 'Arial', sans-serif; background: #0a0a0a; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background: #1a1a1a; padding: 40px 30px; border-radius: 25px; border: 1px solid #333; width: 320px; text-align: center; display: none; }
+        .active { display: block; }
+        .btn-google { background: white; color: #444; padding: 12px; border-radius: 8px; border: none; width: 100%; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; }
+        .btn-google:hover { background: #eee; }
+        .btn-google img { width: 20px; }
+        .btn-main { background: var(--primary); color: white; padding: 15px; border-radius: 50px; border: none; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .user-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--primary); margin-bottom: 10px; }
+        #loading-text { color: var(--primary); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div id="loading-section" class="container active">
+        <p id="loading-text">ĐANG KIỂM TRA PHIÊN...</p>
+    </div>
+
+    <div id="auth-section" class="container">
+        <h2 style="color: var(--primary); margin-bottom: 30px;">HOT COUPLE</h2>
+        <p style="font-size: 14px; color: #aaa; margin-bottom: 20px;">Vui lòng đăng nhập để bắt đầu thử thách</p>
+        <button class="btn-google" id="loginBtn">
+            <img src="
